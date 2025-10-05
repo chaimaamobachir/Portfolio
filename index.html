@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chaimaa Moubachir – Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <style>
+/* ===== Body & Général ===== */
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  background: linear-gradient(160deg, #14202b, #203a43);
+  color: #f0f0f0;
+  line-height: 1.6;
+}
+
+h1,h2,h3,p {
+  margin: 0;
+  padding: 0;
+}
+
+/* ===== Header ===== */
+header {
+  background: #0f2027;
+  padding: 40px 20px;
+  text-align: center;
+  box-shadow: 0 2px 15px rgba(0,0,0,0.5);
+}
+header h1 {
+  font-size: 3rem;
+  color: #00d4ff;
+  font-weight: 700;
+}
+header p {
+  margin-top: 10px;
+  font-size: 1.2rem;
+  color: #cbd5e0;
+  font-weight: 300;
+}
+
+/* ===== Titres Sections ===== */
+h2 {
+  margin: 50px 20px 20px;
+  color: #00d4ff;
+  font-size: 1.8rem;
+  border-left: 4px solid #00d4ff;
+  padding-left: 12px;
+}
+
+/* ===== Portfolio Grid ===== */
+.portfolio {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+  padding: 20px;
+  max-width: 1200px;
+  margin: auto;
+}
+.project-card {
+  background: #1b2735;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 5px 25px rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+.project-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 10px 30px rgba(0, 212, 255, 0.35);
+}
+.project-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+.project-card h3 {
+  padding: 15px;
+  color: #00d4ff;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+/* ===== Modal ===== */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  backdrop-filter: blur(8px);
+  background: rgba(0,0,0,0.85);
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.3s ease-in-out;
+}
+.modal-content {
+  background: #121a24;
+  color: #e0e0e0;
+  border-radius: 20px;
+  padding: 30px;
+  width: 95%;
+  max-width: 900px;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 8px 35px rgba(0,0,0,0.7);
+  animation: slideUp 0.3s ease;
+}
+.modal-header h2 {
+  color: #00d4ff;
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+/* ===== Animations ===== */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes slideUp {
+  from { transform: translateY(50px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* ===== Galerie & Médias ===== */
+#mainImage, video {
+  width: 100%;
+  border-radius: 12px;
+  background: #000;
+  margin: 20px 0;
+}
+.gallery {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+}
+.gallery::-webkit-scrollbar {
+  height: 6px;
+}
+.gallery::-webkit-scrollbar-thumb {
+  background: #00d4ff;
+  border-radius: 10px;
+}
+.gallery img {
+  height: 100px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+.gallery img:hover { transform: scale(1.07); }
+
+/* ===== Tech Tags ===== */
+.tech-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+.tech-tags span {
+  background: #00d4ff;
+  color: #121a24;
+  padding: 6px 14px;
+  border-radius: 25px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+/* ===== Navigation Modale ===== */
+.modal-nav {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+.modal-nav button {
+  background: #00d4ff;
+  border: none;
+  padding: 10px 20px;
+  color: #121a24;
+  font-weight: bold;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.modal-nav button:hover { background: #00aacc; }
+.close {
+  position: absolute;
+  top: 15px; right: 20px;
+  font-size: 32px;
+  font-weight: bold;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* ===== About & Contact ===== */
+.about, .contact {
+  max-width: 1000px;
+  margin: 50px auto;
+  padding: 35px;
+  background: #1b2735;
+  border-radius: 20px;
+  box-shadow: 0 5px 25px rgba(0,0,0,0.5);
+}
+.about p { font-size: 1rem; color: #ccc; }
+
+/* ===== Formulaire Contact ===== */
+.contact form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.contact input, .contact textarea {
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  background: #0f2027;
+  color: #e0e0e0;
+  font-size: 1rem;
+}
+.contact input::placeholder, .contact textarea::placeholder {
+  color: #bbb;
+}
+.contact button {
+  background: #00d4ff;
+  border: none;
+  padding: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 10px;
+  color: #121a24;
+  transition: background 0.3s ease;
+}
+.contact button:hover { background: #00aacc; }
+
+/* ===== Skills Grid ===== */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+  gap: 20px;
+  padding: 20px;
+  max-width: 1200px;
+  margin: auto;
+}
+.skill-card {
+  background: #1b2735;
+  border-radius: 20px;
+  padding: 25px 20px;
+  text-align: center;
+  box-shadow: 0 5px 25px rgba(0,0,0,0.5);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.skill-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 30px rgba(0,212,255,0.4);
+}
+.skill-icon {
+  font-size: 40px;
+  margin-bottom: 12px;
+  color: #00d4ff;
+}
+.skill-card h3 {
+  margin: 10px 0 5px;
+  color: #00d4ff;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+.skill-card p {
+  font-size: 0.95rem;
+  color: #ccc;
+  margin-bottom: 15px;
+}
+
+
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Chaimaa Moubachir</h1>
+    <p>Digital Health Engineer & Full-Stack Developer</p>
+  </header>
+
+  <!-- Sections -->
+  <h2>Medical Image Processing & Detection</h2>
+  <div class="portfolio" id="section1"></div>
+
+  <h2>3D Prototyping & Simulation</h2>
+  <div class="portfolio" id="section2"></div>
+
+  <h2>Web & Mobile Applications</h2>
+  <div class="portfolio" id="section3"></div>
+
+  <h2>Data Analysis & Visualization</h2>
+  <div class="portfolio" id="section4"></div>
+
+  <h2>Compétences Transversales</h2>
+<div class="skills-grid">
+  <div class="skill-card">
+    <div class="skill-icon">🧩</div>
+    <h3>Conception & Modélisation</h3>
+    <p>UML, Diagrammes, Prototypage, Figma</p>
+
+  </div>
+
+  <div class="skill-card">
+    <div class="skill-icon">📊</div>
+    <h3>Analyse & Recherche</h3>
+    <p>Analyse scientifique, Veille technologique, Documentation</p>
+
+  </div>
+  <div class="skill-card">
+    <div class="skill-icon">🛠️</div>
+    <h3>Gestion de Projet</h3>
+    <p>Scrum, Agile, Backlog, Planification</p>
+
+  </div>
+  <div class="skill-card">
+    <div class="skill-icon">🤝</div>
+    <h3>Communication & Collaboration</h3>
+    <p>Travail en équipe, Présentation, Documentation claire</p>
+
+  </div>
+  <div class="skill-card">
+    <div class="skill-icon">🧠</div>
+    <h3>Résolution de Problèmes</h3>
+    <p>Analyse critique, Créativité, Optimisation de solutions</p>
+
+  </div>
+</div>
+
+
+  <!-- About -->
+  <div class="about">
+    <h2>About Me</h2>
+    <p>Hi, I’m <b>Chaimaa Moubachir</b>, a Digital Engineer and Full-Stack Developer with expertise in Artificial Intelligence, web and mobile development, and data analysis. I am passionate about leveraging technology to create innovative solutions, improve efficiency, and solve real-world problems across various industries.</p>
+
+  </div>
+
+  <!-- Contact -->
+  <div class="contact">
+    <h2>Contact</h2>
+    <form>
+      <input type="text" placeholder="Your Name" required>
+      <input type="email" placeholder="Your Email" required>
+      <textarea rows="5" placeholder="Your Message" required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+  </div>
+
+  <!-- Popup -->
+  <div id="projectModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <div class="modal-header">
+        <h2 id="modalTitle"></h2>
+      </div>
+      <div class="modal-body">
+        <p id="modalDesc" class="description"></p>
+        <div class="tech-tags" id="modalTags"></div>
+        <img id="mainImage" src="" alt="Main project view">
+        <div id="modalGallery" class="gallery"></div>
+        <video id="modalVideo" controls></video>
+        <div class="modal-nav">
+          <button onclick="prevProject()">⬅ Previous</button>
+          <button onclick="nextProject()">Next ➡</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const projects = [
+      // Section 1
+      {title:"Breast Cancer Detection with YOLOv8",desc:"This project applies YOLOv8 to mammography images for three key tasks: detecting calcifications, classifying normal vs. cancerous cases, and segmenting tumors (benign, malignant, or normal).",images:["assets/images/yolov8.png","assets/images/yolo.png"],video:"",tags:["Python","YOLOv8","Deep Learning"],section:"section1"},
+      {title:"Skin Cancer Detection using Machine Learning",desc:"This project uses deep learning (TensorFlow & InceptionV3) to classify skin lesions as benign or malignant from photographic images. Trained on the ISIC dataset, the model aims to support early diagnosis of skin cancer and improve clinical decision-making.",images:["assets/images/skidetection.png"],video:"",tags:["Python","CNN","TensorFlow", "InceptionV3"],section:"section1"},
+      {title:"Image Filtering in MATLAB",desc:"This project applies various image filtering techniques in MATLAB — including Gaussian, Laplacian, histogram equalization, Prewitt edge detection, median, and mean filters — to enhance and analyze medical images.",images:["assets/images/matlab.png","assets/images/filter.jpg"],video:"",tags:["MATLAB","Image Processing"],section:"section1"},
+      {title:"Real-Time Medical Consultation Transcription",desc:"This project focused on designing a real-time medical transcription solution that aligns with the available resources and identified needs. In addition to meeting performance and cost-efficiency goals, an enhanced version was proposed through data collection and preprocessing to further improve accuracy, reliability, and system optimization.",images:["assets/images/transcription.jpg"],video:"assets/videos/demo1.mp4",tags:["LLM","Speech-to-Text","Python","HTML","JS","Web Speech API ","Fine tuning","Data collection","Healthcare"],section:"section1"},
+      {title:"LLM-based MCQ Generator for E-Learning",desc:"This project focuses on an AI-based MCQ generator designed for medical e-learning platforms. It assists teachers in automatically generating quiz questions from uploaded course materials using NLP models. The system includes a management interface that allows educators to review, edit, and validate the generated questions before publishing them to students, ensuring accuracy and pedagogical relevance",images:["assets/images/mcq.png","assets/images/Screenshot 2025-10-05 201620.jpg","assets/images/mcq1.png","assets/images/Picture10.jpg"],video:"",tags:["NLP","Python","LSTM","Transformer","GPT","E-Learning"],section:"section1"},
+      {title:"Deep Learning & ML for Spectral Analysis",desc:"This project focuses on developing an intelligent quality control system for the agri-food industry by combining spectroscopic imaging and artificial intelligence. A comparative study was conducted to identify the most suitable spectroscopic camera, followed by the training and fine-tuning of deep learning models (ResNet) and machine learning algorithms (SVM) for spectral classification and contamination detection",images:["assets/images/filtrespectre1.jpg","assets/images/filtrespectre.jpg","assets/images/Copie de Purple and Pink Doodle Fun Competitive Analysis Brainstorm Session Presentation (1).png","assets/images/Copie de Purple and Pink Doodle Fun Competitive Analysis Brainstorm Session Presentation (2).png","assets/images/Copie de Purple and Pink Doodle Fun Competitive Analysis Brainstorm Session Presentation.png","assets/images/Screenshot 2025-10-05 003840.jpg","assets/images/Screenshot 2025-10-05 003754.jpg","assets/images/Screenshot 2025-10-05 003531.jpg"],video:"",tags:["Spectroscopy","ML","Deep Learning","Python","Preprocessing","Regression","Classification"],section:"section1"},
+      // Section 2
+      {title:"3D Prototyping with Catia",desc:"3D prototyping and CAD design with Catia.",images:["assets/images/catia.jpg","assets/images/Screenshot 2025-10-05 202710.jpg"],video:"",tags:["Catia","3D Design"],section:"section2"},
+      {title:"3D Medical Imaging Segmentation with 3D Slicer",desc:"Segmentation, edge detection and cleaning of CT Scan medical images of spine with 3D Slicer.",images:["assets/images/spin.jpg","assets/images/Screenshot 2024-11-19 140425.png","assets/images/Screenshot 2024-11-19 174613.png","assets/images/Screenshot 2024-11-19 175036.png","assets/images/Screenshot 2024-11-19 175516.png"],video:"",tags:["3D Slicer","Medical Imaging"],section:"section2"},
+      {title:"Game Development with Unity 3D",desc:"Interactive 3D simulation and game development with Unity.",images:["assets/images/unity1.jpg","assets/images/WhatsApp_Image_2024-11-25_at_3.33.20_AM-removebg-preview.png","assets/images/WhatsApp_Image_2024-11-25_at_3.32.49_AM-removebg-preview-removebg-preview.png"],video:["assets/videos/WhatsApp Video 2025-10-05 at 20.43.24_a6241a71.mp4","assets/videos/WhatsApp Video 2025-10-05 at 20.44.05_c03c9c24.mp4"],tags:["Unity","3D","Simulation"],section:"section2"},
+      // Section 3
+      {title:"Web Platform for Agro-Food Quality Automation",desc:"SpectraQual is a web-based platform designed for managing and visualizing spectral data. It provides an intuitive interface that includes modules for user authentication, real-time spectral visualization, sample management, AI result display, reporting, and system monitoring. The platform ensures seamless data acquisition, analysis, and supervision through interactive dashboards and detailed analytics tools.",images:["assets/images/pfe.jpg","assets/images/pic1.jpg","assets/images/pic3.jpg","assets/images/pic5.jpg","assets/images/pic6.jpg"],video:"",tags:["Django","React.js","Vue.js","Svelte","MongoDB","Docker ","AI"],section:"section3"},
+      {title:"E-Learning Platform for Dermatology Students",desc:"Platform for course management in dermatology.",images:["assets/images/Screenshot 2025-10-05 011654.jpg","assets/images/Picture2__1_-removebg-preview.png","assets/images/Picture7.png","assets/images/Picture8.jpg","assets/images/Picture4.png","assets/images/Screenshot 2025-10-05 011752.jpg","assets/images/Screenshot 2025-10-05 011853.jpg","assets/images/Screenshot 2025-10-05 012011.jpg"],video:"",tags:["React","MySQL","E-Learning"],section:"section3"},
+      {title:"Reservation Management Web App",desc:"Reservation management system for salons.",images:["assets/images/lp.png","assets/images/pr1 (10).png","assets/images/pr1 (1).png","assets/images/pr1 (2).png","assets/images/pr1 (3).png","assets/images/pr1 (4).png","assets/images/pr1 (5).png","assets/images/pr1 (6).png","assets/images/pr1 (7).png","assets/images/pr1 (8).png","assets/images/pr1 (9).png"],video:"",tags:["Symfony","SQL","Web"],section:"section3"},
+      {title:"Reservation Management Mobile App",desc:"Mobile app version of reservation platform.",images:["assets/images/apppp.png"],video:"assets/videos/WhatsApp Video 2025-10-05 at 20.06.49_024ce8ae.mp4",tags:["React Native","Mobile App"],section:"section3"},
+      {title:"Tourism Showcase Website",desc:"Web platform showcasing tourism experiences.",images:["assets/images/touris.jpg","assets/images/tourism (2).jpg","assets/images/tourism (3).jpg","assets/images/tourism (4).jpg","assets/images/tourism (5).jpg",],video:"",tags:["HTML","CSS","JS","PHP","MYSQL"],section:"section3"},
+      {title:"E-Commerce Website",desc:"Custom e-commerce platform for online sales.",images:["assets/images/carla.jpg","assets/images/Capture d’écran 2022-06-19 133430.png","assets/images/Capture d’écran 2022-06-19 133730.png","assets/images/Capture d’écran 2022-06-19 133851.png","assets/images/Capture d’écran 2022-06-19 133938.png","assets/images/carlaMobile.jpg"],video:"",tags:["WORDPRESS","WOOCOMMERCE","PHP","MySQL","E-Commerce"],section:"section3"},
+      {title:"E-Commerce Website with SEO & Social Media",desc:"E-commerce website with SEO optimization, online payments via bank cards, Google Pay, Apple Pay, Klarna, and full social media integration.",images:["assets/images/jefferson.jpg","assets/images/Screenshot 2025-10-05 142922.jpg","assets/images/Screenshot 2025-10-05 143036.jpg","assets/images/Screenshot 2025-10-05 143131.jpg","assets/images/Screenshot 2025-10-05 143205.jpg","assets/images/Screenshot 2025-10-05 143324.jpg","assets/images/Screenshot 2025-10-05 143428.jpg","assets/images/Screenshot 2025-10-05 143511.jpg","assets/images/Screenshot 2025-10-05 143549.jpg","assets/images/WhatsApp Image 2025-10-05 at 14.41.45_62ed4f12.jpg","assets/images/WhatsApp Image 2025-10-05 at 14.41.44_34df1a7a.jpg"],video:"",tags:["WORDPRESS","SEO","E-Commerce","Social Media"],section:"section3"},
+      // Section 4
+      {title:"Power BI Dashboard for Medical Data",desc:"Interactive Power BI dashboards for medical data analysis.",images:["assets/images/powerbi1.png","assets/images/Screenshot 2024-01-26 164743.png","assets/images/Screenshot 2024-01-26 164203.png"],video:"",tags:["Power BI","SQL Server","Healthcare"],section:"section4"},
+      {title:"XML Data Integration in Java Web App",desc:"Java-based solution that transforms XML data into dynamic HTML content for easier visualization and presentation.",images:["assets/images/xml.jpg","assets/images/Screenshot 2025-10-05 192619.jpg","assets/images/Screenshot 2025-10-05 192738.jpg","assets/images/Screenshot 2025-10-05 192953.jpg"],video:"",tags:["Java","XML","Web"],section:"section4"}
+    ];
+
+let currentProject = 0;
+let currentMediaIndex = 0;
+
+// Génération des cartes
+projects.forEach((proj, i) => {
+  const card = document.createElement("div");
+  card.classList.add("project-card");
+  card.innerHTML = `<img src="${proj.images[0]}" alt="${proj.title}"><h3>${proj.title}</h3>`;
+  card.onclick = () => openModal(i);
+  document.getElementById(proj.section).appendChild(card);
+});
+
+function openModal(index) {
+  stopAllVideos(); // arrêter toutes les vidéos avant d'ouvrir un projet
+  currentProject = index;
+  currentMediaIndex = 0;
+  const project = projects[index];
+
+  // Titre et description
+  document.getElementById("modalTitle").innerText = project.title;
+  document.getElementById("modalDesc").innerText = project.desc;
+
+  // Tags
+  const tagsEl = document.getElementById("modalTags");
+  tagsEl.innerHTML = "";
+  project.tags.forEach(tag => {
+    const span = document.createElement("span");
+    span.innerText = tag;
+    tagsEl.appendChild(span);
+  });
+
+  // Galerie miniature
+  const gallery = document.getElementById("modalGallery");
+  gallery.innerHTML = "";
+  let media = [...project.images];
+  if (project.video) {
+    if (Array.isArray(project.video)) media.push(...project.video);
+    else media.push(project.video);
+  }
+
+  media.forEach((src, i) => {
+    const thumb = document.createElement(src.endsWith(".mp4") ? "div" : "img");
+    if (thumb.tagName === "IMG") {
+      thumb.src = src;
+    } else {
+      // miniature vidéo
+      thumb.innerHTML = "🎬";
+      thumb.style.fontSize = "30px";
+      thumb.style.textAlign = "center";
+      thumb.style.color = "#00d4ff";
+      thumb.style.width = "100px";
+      thumb.style.height = "100px";
+      thumb.style.display = "flex";
+      thumb.style.alignItems = "center";
+      thumb.style.justifyContent = "center";
+      thumb.style.background = "#121a24";
+      thumb.style.borderRadius = "8px";
+      thumb.style.cursor = "pointer";
+
+      // ajouter un indicateur si plusieurs médias
+      if (media.length > 1) {
+        const indicator = document.createElement("span");
+        indicator.innerText = media.length > 1 ? `+${media.length - 1}` : "";
+        indicator.style.position = "absolute";
+        indicator.style.top = "5px";
+        indicator.style.right = "8px";
+        indicator.style.color = "#00d4ff";
+        indicator.style.fontWeight = "bold";
+        indicator.style.fontSize = "0.8rem";
+        thumb.style.position = "relative";
+        thumb.appendChild(indicator);
+      }
+    }
+    thumb.style.height = "100px";
+    thumb.style.borderRadius = "8px";
+    thumb.style.marginRight = "10px";
+    thumb.style.cursor = "pointer";
+
+    thumb.onclick = () => showMedia(i);
+    gallery.appendChild(thumb);
+  });
+
+  showMedia(currentMediaIndex);
+  document.getElementById("projectModal").style.display = "flex";
+}
+
+function showMedia(i) {
+  stopAllVideos(); // arrêter toutes les vidéos avant de changer de media
+  const project = projects[currentProject];
+  const mainImage = document.getElementById("mainImage");
+  const videoMain = document.getElementById("modalVideo");
+
+  let media = [...project.images];
+  if (project.video) {
+    if (Array.isArray(project.video)) media.push(...project.video);
+    else media.push(project.video);
+  }
+
+  const src = media[i];
+  if (src.endsWith(".mp4")) {
+    mainImage.style.display = "none";
+    videoMain.style.display = "block";
+    videoMain.src = src;
+    videoMain.controls = true;
+    videoMain.style.height = "400px"; // taille normale
+    videoMain.style.width = "100%";
+    videoMain.play();
+  } else {
+    mainImage.style.display = "block";
+    mainImage.src = src;
+    videoMain.style.display = "none";
+  }
+
+  currentMediaIndex = i;
+}
+
+// arrêter toutes les vidéos
+function stopAllVideos() {
+  const videoEl = document.getElementById("modalVideo");
+  videoEl.pause();
+  videoEl.currentTime = 0;
+}
+
+// Navigation clavier
+document.addEventListener("keydown", (e) => {
+  if (document.getElementById("projectModal").style.display === "flex") {
+    if (e.key === "ArrowLeft") {
+      currentMediaIndex = (currentMediaIndex - 1 + getMediaCount()) % getMediaCount();
+      showMedia(currentMediaIndex);
+    }
+    if (e.key === "ArrowRight") {
+      currentMediaIndex = (currentMediaIndex + 1) % getMediaCount();
+      showMedia(currentMediaIndex);
+    }
+    if (e.key === "Escape") closeModal(); // échap ferme modal
+  }
+});
+
+function getMediaCount() {
+  const project = projects[currentProject];
+  let media = [...project.images];
+  if (project.video) {
+    if (Array.isArray(project.video)) media.push(...project.video);
+    else media.push(project.video);
+  }
+  return media.length;
+}
+
+function closeModal() {
+  stopAllVideos();
+  document.getElementById("projectModal").style.display = "none";
+}
+
+function prevProject() {
+  stopAllVideos();
+  currentProject = (currentProject - 1 + projects.length) % projects.length;
+  openModal(currentProject);
+}
+
+function nextProject() {
+  stopAllVideos();
+  currentProject = (currentProject + 1) % projects.length;
+  openModal(currentProject);
+}
+</script>
